@@ -106,9 +106,9 @@ char const* string_desc_arr[] = {
 #ifdef PICO_RP2350
     "RP2350",  // 1: Manufacturer
 #else
-    "RP2040",  // 1: Manufacturer
+    "VEC",  // 1: Manufacturer
 #endif
-    "HID Remapper XXXX",  // 2: Product
+    "VEC USB Footpedal",  // 2: Product
     "123456789012",       // 3: Serial Number
 };
 
