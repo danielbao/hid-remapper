@@ -521,6 +521,28 @@ uint8_t const our_report_descriptor_xac_compat[] = {
     0xC0,              // End Collection
 };
 
+uint8_t const our_report_descriptor_foot_pedal[] = {
+    0x05, 0x0C,    //    Usage Page (Consumer)    
+    0x09, 0x03,    //    Usage (Programmable Buttons)
+    0xA1, 0x01,    //    Collection (Application)    
+    0x05, 0x09,    //    Usage Page (Button)
+    0x19, 0x01,    //    Usage Minimum (0x01)
+    0x29, 0x03,    //    Usage Maximum (0x03)
+    0x15, 0x00,    //    Logical Minimum (0)
+    0x25, 0x01,    //    Logical Maximum (1)
+    0x95, 0x03,    //    Report Count (3)  Button? (1 bit per each of 3 buttons)
+    0x75, 0x01,    //    Report Size (1)
+    0x81, 0x02,    //    Input
+    0x95, 0x01,    //    Report Count (1)
+    0x75, 0x05,    //    Report Size (5)  5 bits of padding?
+    0x81, 0x01,    //    Input
+    0x95, 0x01,    //    Report Count (1)
+    0x75, 0x08,    //    Report Size (8)  8 bits of padding?
+    0x81, 0x01,    //    Input
+    0xC0,          //    End Collection
+};
+
+
 void kb_mouse_handle_set_report(uint8_t report_id, const uint8_t* buffer, uint16_t reqlen) {
     if (report_id == REPORT_ID_MULTIPLIER && reqlen >= 1) {
         memcpy(&resolution_multiplier, buffer, 1);
@@ -585,6 +607,13 @@ static const uint8_t xac_compat_neutral[] = { 0x80, 0x80, 0x80, 0x80, 0x08, 0x00
 void xac_compat_clear_report(uint8_t* report, uint8_t report_id, uint16_t len) {
     memcpy(report, xac_compat_neutral, sizeof(xac_compat_neutral));
 }
+
+static const uint8_t foot_pedal_neutral[] = { 0x00, 0x00};
+
+void foot_pedal_clear_report(uint8_t* report, uint8_t report_id, uint16_t len) {
+    memcpy(report, foot_pedal_neutral, sizeof(foot_pedal_neutral));
+}
+
 
 int32_t horipad_default_value(uint32_t usage) {
     switch (usage) {
@@ -695,6 +724,14 @@ const our_descriptor_def_t our_descriptors[] = {
         .handle_received_report = do_handle_received_report,
         .clear_report = xac_compat_clear_report,
         .default_value = ps4_stadia_default_value,  // sic
+    },
+    {
+        .idx = 6,
+        .descriptor = our_report_descriptor_foot_pedal,
+        .descriptor_length = sizeof(our_report_descriptor_foot_pedal),
+        .handle_received_report = do_handle_received_report,
+        .clear_report = foot_pedal_clear_report,
+        .default_value = 0,  // sic
     },
 };
 
