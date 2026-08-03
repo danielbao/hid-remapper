@@ -530,6 +530,10 @@ const usages = {
 };
 
 const common_target_usages = {
+    "0x01": { 'name': 'Footpedal 1', 'class': 'other' },
+    "0x02": { 'name': 'Footpedal 2', 'class': 'other' },
+    "0x04": { 'name': 'Footpedal 3', 'class': 'other' },
+    "0x00000000": { 'name': 'Nothing', 'class': 'other' },
     "0x00000000": { 'name': 'Nothing', 'class': 'other' },
     "0xfff10001": { 'name': 'Layer 1', 'class': 'other' },
     "0xfff10002": { 'name': 'Layer 2', 'class': 'other' },
